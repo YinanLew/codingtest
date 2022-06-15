@@ -1,11 +1,18 @@
 import React from 'react';
 import "./style.css";
+import ProductsContext from "./Context";
 
-function Products({products}) {
+function Products() {
+
+    const {Consumer} = ProductsContext;
     return (
-        <div>
-            {products}
-        </div>
+        <Consumer>
+            {
+                value => {
+                    return `${value.products}`
+                }
+            }
+        </Consumer>
     );
 }
 

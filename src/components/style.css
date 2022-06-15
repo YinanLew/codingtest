@@ -85,16 +85,17 @@ input[type="text"],
     font-size: 18px;
     text-align: center;
     padding: 0.5rem;
-    border-radius: 8px;
     background-color: #F0FAF8;
     width: 20rem;
     border: none;
     border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 1rem;
 }
 
 label,
 .token {
     margin-top: 1rem;
+    border-radius: 8px;
 }
 
 .token {

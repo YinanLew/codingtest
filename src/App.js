@@ -1,13 +1,16 @@
 import React from "react";
-import Login from "./components/Login";
 
 import "./components/style.css";
+import {useRoutes} from "react-router-dom";
+import routes from "./components/router";
 
 function App() {
 
+    const element = useRoutes(routes);
+
   return (
     <div className="App">
-      <Login />
+        {element}
     </div>
   );
 }

@@ -1,26 +1,26 @@
-import React, {useRef, useState, useEffect, createContext} from 'react'
+import React, {useRef, useState, useEffect, createContext, useContext} from 'react'
 import favicon from '../img/favicon.svg'
 import axios from 'axios'
-import Products from './Products'
+import ProductsContext from "./Context";
 
 import EmailIcon from '@mui/icons-material/Email'
 import { IconButton, Link } from '@mui/material'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import Products from "./Products";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{1,19}$/
 
 function Login() {
   const userRef = useRef();
 
-
+  const {setProducts} = useContext(ProductsContext);
 
   const [username, setUsername] = useState('');
   const [date, setDate] = useState('');
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
-  const [products, setProducts] = useState([]);
-  // const [productsPage, setProductsPage] = useState(true);
+
 
   const [errMsg, setErrMsg] = useState('');
 
@@ -41,6 +41,7 @@ function Login() {
       setErrMsg('Invalid Entry')
     }
     try {
+      console.log(username,date)
       const response = await axios.post(
         'https://wemi-round2-server.herokuapp.com/round2/authentication',
         {
@@ -48,8 +49,10 @@ function Login() {
           displayDate: date,
         },
       )
+
       const token = response.data.access_token
       window.localStorage.setItem('token', token)
+      console.log(window.localStorage.getItem('token'))
       const res = await axios.post(
         'https://wemi-round2-server.herokuapp.com/round2/get-products',
         {
@@ -128,14 +131,16 @@ function Login() {
                     onChange={e => setDate(e.target.value)}
                 />
 
-                <button className='token'>Get Token</button>
+                <Link to={"/products"} element={<Products />} ><button className='token'>Get Token</button></Link>
               </form>
             </section>
           </div>
           <footer className='footer'>
             <div className='footer-icons'>
               <IconButton>
-                <EmailIcon style={{ color: '#2CD889' }} />
+                <a href="mailto:Yinanlu0112@gmail.ca?&subject=Coding Test">
+                  <EmailIcon style={{ color: '#2CD889' }} />
+                </a>
               </IconButton>
               <span>example@gmail.com</span>
             </div>
@@ -147,7 +152,7 @@ function Login() {
             </div>
             <div className='footer-icons'>
               <IconButton>
-                <Link href='https://github.com/YinanLew/'>
+                <Link href='https://github.com/YinanLew/codingtest'>
                   <GitHubIcon style={{ color: '#2CD889' }} />
                 </Link>
               </IconButton>
